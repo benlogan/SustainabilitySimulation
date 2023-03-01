@@ -3,30 +3,53 @@ import random
 from model.applicationClass import Application
 from model.serverClass import Server
 
-def create_test_data(size):
+# what % of apps should be cloud-based?
+cloud_threshold_percentage = 30
+
+
+def create_test_data(test_data_size):
     applist = []
-    i = 1
-    while i <= size:
+    app_iterator = 1
+    while app_iterator <= test_data_size:
         app = Application()
 
-        app.name = 'Simulated App ' + str(i)
+        app.name = 'Simulated App ' + str(app_iterator)
 
-        app.lines_of_code = random.randrange(1, 1000000)
+        # between 1000 and 1m LOC
+        app.lines_of_code = random.randrange(1000, 1000000)
 
         # calculate the SCI as a function of LOC for now...
         app.sci_score = app.lines_of_code / 1000
 
+        # between 1 and 100 servers
         server_count = random.randrange(1, 100)
         server_list = []
-        j = 1
-        while j <= server_count:
+        server_iterator = 1
+        while server_iterator <= server_count:
             server_list.append(Server())
-            j += 1
-        app.servers = server_list;
+            server_iterator += 1
+        app.servers = server_list
 
-        # print('Created an app. LOC; ', app.lines_of_code, ' SCI; ', app.sci_score, ' Server Count; ', len(app.servers))
+        # determine if cloud (random, flip a coin)
+        # cloud = random.randint(0, 1)
+        # if cloud == 1:
+        #    app.cloud = True
 
         applist.append(app)
 
-        i += 1
+        app_iterator += 1
+
+    # post processing?
+    cloud_coverage = 0
+    # how many cloud apps do we need - convert the % to a real number
+    cloud_threshold = cloud_threshold_percentage / 100 * len(applist)
+    while cloud_coverage < cloud_threshold:
+        # until we have sufficient coverage
+        # keep picking apps at random
+        # and converting them to cloud (if they aren't already)
+        random_iterator = random.randint(0, len(applist)-1)
+        if not applist[random_iterator].cloud:
+            applist[random_iterator].cloud = True
+            cloud_coverage += 1
+
     return applist
