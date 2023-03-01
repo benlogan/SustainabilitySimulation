@@ -15,12 +15,19 @@ from visualisation import *
 # some very basic static analysis
 def static_analysis(applist):
     combined_sci_score = 0
-    for a in appList:
-        combined_sci_score += a.sciScore
+    for a in applist:
+        combined_sci_score += a.sci_score
 
     print(f'Combined SCI Score; {combined_sci_score}')
+
     average_sci_score = combined_sci_score / len(applist)
     print(f'Average SCI Score; {average_sci_score}')
+
+    combined_power = 0
+    for app in applist:
+        for server in app.servers:
+            combined_power += server.max_power_consumption
+    print(f'Total Power; {combined_power}W')
 
 
 # final static analysis, using the chart data
@@ -33,7 +40,7 @@ def final_static_analysis(x_axis, y_axis):
 
 def run_simulation():
     applist = create_test_data(1000)
-    # static_analysis(appList)
+    static_analysis(applist)
 
     x_axis = []
     y_axis = []
@@ -46,8 +53,8 @@ def run_simulation():
         for a in applist:
             # assume the SCI scores drops daily by between 0 and 1 %
             # need to actually persist the new value for future iterations!
-            a.sciScore = a.sciScore - (a.sciScore * (random.uniform(0, 1) / 100))
-            combined_sci_score += a.sciScore
+            a.sci_score = a.sci_score - (a.sci_score * (random.uniform(0, 1) / 100))
+            combined_sci_score += a.sci_score
         # print('day', i, 'combined_sci_score;', combined_sci_score)
 
         x_axis.append(i)

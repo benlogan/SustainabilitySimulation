@@ -1,5 +1,6 @@
 class Application:
     name = ''
-    linesOfCode = 0
+    lines_of_code = 0
     cloud = False
-    sciScore = 0
+    sci_score = 0
+    servers = []
