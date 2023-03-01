@@ -8,11 +8,11 @@
 # variables; time, rate of migration, app growth/shrinkage
 import random
 
-from applicationClass import Application
 from utilities import *
 from visualisation import *
 
 
+# some very basic static analysis
 def static_analysis(applist):
     combined_sci_score = 0
     for a in appList:
@@ -23,10 +23,16 @@ def static_analysis(applist):
     print(f'Average SCI Score; {average_sci_score}')
 
 
+# final static analysis, using the chart data
+def final_static_analysis(x_axis, y_axis):
+    total_differential = y_axis[0] - y_axis[len(x_axis) - 1]
+    percentage_differential = (total_differential / y_axis[0]) * 100
+    print('total_differential;', total_differential)
+    print('percentage_differential;', round(percentage_differential, 2), '%')
+
+
 def run_simulation():
     applist = create_test_data(1000)
-
-    # some basic static analysis
     # static_analysis(appList)
 
     x_axis = []
@@ -42,19 +48,13 @@ def run_simulation():
             # need to actually persist the new value for future iterations!
             a.sciScore = a.sciScore - (a.sciScore * (random.uniform(0, 1) / 100))
             combined_sci_score += a.sciScore
-        print('day', i, 'combined_sci_score;', combined_sci_score)
+        # print('day', i, 'combined_sci_score;', combined_sci_score)
 
         x_axis.append(i)
         y_axis.append(combined_sci_score)
 
         i += 1
 
-    # draw a chart!
     draw_line_chart(x_axis, y_axis)
 
-    # final static analysis...
-    total_differential = y_axis[0] - y_axis[364]
-    percentage_differential = (total_differential / y_axis[0]) * 100
-    print('total_differential;', total_differential)
-    print('percentage_differential;', round(percentage_differential, 2), '%')
-
+    final_static_analysis(x_axis, y_axis)
