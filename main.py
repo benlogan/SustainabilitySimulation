@@ -7,41 +7,24 @@
 # logic/rules; e.g. cloud reduces emissions by 90%
 # variables; time, rate of migration, app growth/shrinkage
 import random
-import matplotlib.pyplot as plt
 
 from applicationClass import Application
+from utilities import *
+from visualisation import *
 
 
-def create_test_data(size):
-    appList = []
-    i = 1
-    while i <= size:
-        app = Application()
-
-        app.name = 'Simulated App ' + str(i)
-        app.linesOfCode = random.randrange(1, 1000000)
-        # calculate the SCI as a function of LOC for now...
-        app.sciScore = app.linesOfCode / 1000
-        # print('Created an app. LOC; ', app.linesOfCode, ' SCI; ', app.sciScore)
-
-        appList.append(app)
-
-        i += 1
-    return appList
-
-
-def static_analysis(appList):
-    combinedSciScore = 0
+def static_analysis(applist):
+    combined_sci_score = 0
     for a in appList:
-        combinedSciScore += a.sciScore
+        combined_sci_score += a.sciScore
 
-    print(f'Combined SCI Score; {combinedSciScore}')
-    averageSciScore = combinedSciScore / len(appList)
-    print(f'Average SCI Score; {averageSciScore}')
+    print(f'Combined SCI Score; {combined_sci_score}')
+    average_sci_score = combined_sci_score / len(applist)
+    print(f'Average SCI Score; {average_sci_score}')
 
 
 def run_simulation():
-    appList = create_test_data(1000)
+    applist = create_test_data(1000)
 
     # some basic static analysis
     # static_analysis(appList)
@@ -49,37 +32,31 @@ def run_simulation():
     x_axis = []
     y_axis = []
 
-    simIterations = 365
+    sim_iterations = 365
     i = 1
-    while i <= simIterations:
+    while i <= sim_iterations:
         # calculate the daily emissions for each app (and sum)
-        combinedSciScore = 0
-        for a in appList:
+        combined_sci_score = 0
+        for a in applist:
             # assume the SCI scores drops daily by between 0 and 1 %
             # need to actually persist the new value for future iterations!
             a.sciScore = a.sciScore - (a.sciScore * (random.uniform(0, 1) / 100))
-            combinedSciScore += a.sciScore
-        print('day', i, 'combinedSciScore;', combinedSciScore)
+            combined_sci_score += a.sciScore
+        print('day', i, 'combined_sci_score;', combined_sci_score)
 
         x_axis.append(i)
-        y_axis.append(combinedSciScore)
+        y_axis.append(combined_sci_score)
 
         i += 1
 
     # draw a chart!
-    plt.figure(figsize=(15, 5))
-    plt.plot(x_axis, y_axis)
-    plt.title('Emissions Over Time')
-    plt.xlabel('Days')
-    plt.ylabel('Combined SCI Score')
-    plt.show()
+    draw_line_chart(x_axis, y_axis)
 
     # final static analysis...
-
-    totalDifferential = y_axis[0] - y_axis[364]
-    percentageDifferential = (totalDifferential / y_axis[0]) * 100
-    print('totalDifferential;', totalDifferential)
-    print('percentageDifferential;', round(percentageDifferential, 2), '%')
+    total_differential = y_axis[0] - y_axis[364]
+    percentage_differential = (total_differential / y_axis[0]) * 100
+    print('total_differential;', total_differential)
+    print('percentage_differential;', round(percentage_differential, 2), '%')
 
 
 run_simulation()
