@@ -10,6 +10,7 @@
 from utilities import *
 from visualisation import *
 from analysis import *
+from strategies.cloud import *
 
 
 def run_simulation():
@@ -25,11 +26,18 @@ def run_simulation():
     while i <= sim_iterations:
         # calculate the daily emissions for each app (and sum)
         combined_sci_score = 0
-        for a in applist:
+        for app in applist:
             # assume the SCI scores drops daily by between 0 and 1 %
             # need to actually persist the new value for future iterations!
-            a.sci_score = a.sci_score - (a.sci_score * (random.uniform(0, 1) / 100))
-            combined_sci_score += a.sci_score
+            app.sci_score = app.sci_score - (app.sci_score * (random.uniform(0, 1) / 100))
+            combined_sci_score += app.sci_score
+
+            # apply a carbon reduction strategy
+            if not app.cloud:
+                app.cloudProgress += cloud_progress_rate
+            if app.cloudProgress == 100:
+                app.cloud = True
+
         # print('day', i, 'combined_sci_score;', combined_sci_score)
 
         x_axis.append(i)
@@ -40,3 +48,6 @@ def run_simulation():
     draw_line_chart(x_axis, y_axis)
 
     final_static_analysis(x_axis, y_axis)
+
+    # for app in applist:
+    #    print(app)

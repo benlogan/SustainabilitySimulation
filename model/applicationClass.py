@@ -2,6 +2,7 @@ class Application:
     name = ''
     lines_of_code = 0
     cloud = False
+    cloudProgress = 0
     sci_score = 0
     servers = []
 
