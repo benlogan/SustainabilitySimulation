@@ -58,5 +58,3 @@ def run_simulation():
     print('total_differential;', total_differential)
     print('percentage_differential;', round(percentage_differential, 2), '%')
 
-
-run_simulation()
