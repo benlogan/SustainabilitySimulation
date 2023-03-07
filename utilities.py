@@ -50,6 +50,12 @@ def create_test_data(test_data_size):
         random_iterator = random.randint(0, len(applist)-1)
         if not applist[random_iterator].cloud:
             applist[random_iterator].cloud = True
+            applist[random_iterator].cloud_progress = 100
             cloud_coverage += 1
 
     return applist
+
+
+# X is what percentage of Y
+def percentage_of(x, y):
+    return 100 / y * x
