@@ -22,8 +22,10 @@ def run_simulation(show_chart):
 
     initial_static_analysis(applist)
 
-    x_axis = []
-    y_axis = []
+    cloud_x_axis = []
+    cloud_y_axis = []
+    footprint_x_axis = []
+    footprint_y_axis = []
 
     # 1 iteration of the simulator = 1 day
     sim_iterations = YEARS_1
@@ -42,7 +44,10 @@ def run_simulation(show_chart):
             # apply a carbon reduction strategy
             if not app.cloud:
                 # app.cloud_progress += cloud_progress_rate
-                app.cloud_progress += random.uniform(cloud_progress_min, cloud_progress_max)
+                # I don't really want this rate to vary by date, or it will become uniform across all apps
+                # app.cloud_progress += random.uniform(cloud_progress_min, cloud_progress_max)
+                app.cloud_progress += app.cloud_progress_rate
+                # TODO perhaps add some small variability here?
             if app.cloud_progress >= 100:
                 app.cloud = True
                 app.cloud_progress = 100
@@ -50,15 +55,20 @@ def run_simulation(show_chart):
 
         # print('day', i, 'combined_sci_score;', combined_sci_score)
 
-        x_axis.append(i)
-        #y_axis.append(combined_sci_score)
-        y_axis.append(cumulative_cloud_progress)
+        cloud_x_axis.append(i)
+        cloud_y_axis.append(cumulative_cloud_progress)
+
+        footprint_x_axis.append(i)
+        footprint_y_axis.append(combined_sci_score)
+
+        # TODO would be nice to plot both of these lines on the same chart!
 
         i += 1
 
     if show_chart == 'chart=t':
-        draw_line_chart(x_axis, y_axis)
+        draw_line_chart('Cloud Progress', 'Days', 'App Count', cloud_x_axis, cloud_y_axis)
+        draw_line_chart('Emissions Over Time', 'Days', 'Combined SCI Score', footprint_x_axis, footprint_y_axis)
 
-    chart_analysis(x_axis, y_axis)
+    chart_analysis(footprint_x_axis, footprint_y_axis)
 
     final_static_analysis(applist)

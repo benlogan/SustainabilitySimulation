@@ -1,10 +1,14 @@
 class Application:
     name = ''
     lines_of_code = 0
+
     cloud = False
     # % complete?
     cloud_progress = 0
+    cloud_progress_rate = 0
+
     sci_score = 0
+
     servers = []
 
     def __str__(self):
@@ -12,6 +16,7 @@ class Application:
                + '\nlines_of_code: ' + str(self.lines_of_code) \
                + '\ncloud: ' + str(self.cloud) \
                + '\ncloud_progress: ' + str(self.cloud_progress) + '' \
+               + '\ncloud_progress_rate: ' + str(self.cloud_progress_rate) + '' \
                + '\nsci_score: ' + str(self.sci_score) + '%' \
                + '\nserver count: ' + str(len(self.servers)) \
                + '\n'

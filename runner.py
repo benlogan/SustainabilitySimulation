@@ -8,7 +8,7 @@ simulation_count = int(sys.argv[2])
 
 i = 1
 while i <= simulation_count:
-    print('**** SIMULATION ' + str(i) + '****')
+    print('**** SIMULATION ' + str(i) + '****' + '\n')
     run_simulation(show_chart)
     i += 1
 

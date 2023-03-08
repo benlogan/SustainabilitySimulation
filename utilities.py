@@ -1,5 +1,9 @@
 import random
 
+# would require that I fully specify all uses, e.g. strategies.cloud.X
+# import strategies.cloud
+from strategies.cloud import *
+
 from model.applicationClass import Application
 from model.serverClass import Server
 
@@ -34,6 +38,8 @@ def create_test_data(test_data_size):
         # cloud = random.randint(0, 1)
         # if cloud == 1:
         #    app.cloud = True
+
+        app.cloud_progress_rate = random.uniform(cloud_progress_min, cloud_progress_max)
 
         applist.append(app)
 

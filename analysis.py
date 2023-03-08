@@ -21,7 +21,7 @@ def initial_static_analysis(applist):
 
     cloud_analysis(applist)
 
-    print('----initial_static_analysis end----')
+    print('----initial_static_analysis end----' + '\n')
 
 
 # chart data analysis
@@ -31,7 +31,7 @@ def chart_analysis(x_axis, y_axis):
     percentage_differential = (total_differential / y_axis[0]) * 100
     print('total_differential;', total_differential)
     print('percentage_differential;', round(percentage_differential, 2), '%')
-    print('----chart_analysis end----')
+    print('----chart_analysis end----' + '\n')
 
 
 # final static analysis, using the chart data
@@ -40,7 +40,7 @@ def final_static_analysis(applist):
     cloud_analysis(applist)
     # for app in applist:
     #    print(app)
-    print('----final_static_analysis end----')
+    print('----final_static_analysis end----' + '\n')
 
 
 def cloud_analysis(applist):
