@@ -1,5 +1,5 @@
+# this represents an on-prem server
 class Server:
-    name = 'Dill Blade'
+    name = 'Dell'
     max_power_consumption = 800
     avg_cpu_utilisation = 20
-    cloud = False

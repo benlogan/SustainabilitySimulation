@@ -21,6 +21,9 @@ def initial_static_analysis(applist):
 
     cloud_analysis(applist)
 
+    # for app in applist:
+    #    print(app)
+
     print('----initial_static_analysis end----' + '\n')
 
 

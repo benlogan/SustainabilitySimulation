@@ -34,6 +34,9 @@ def create_test_data(test_data_size):
             server_iterator += 1
         app.servers = server_list
 
+        # TODO just taking the max power off the first server, because I know it's a constant
+        app.servers_total_power = len(app.servers) * app.servers[0].max_power_consumption
+
         # determine if cloud (random, flip a coin)
         # cloud = random.randint(0, 1)
         # if cloud == 1:
